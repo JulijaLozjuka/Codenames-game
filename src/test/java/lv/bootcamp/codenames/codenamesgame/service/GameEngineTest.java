@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameEngineTest {
-    GameEngine gameEngine = new GameEngine();
+    GameEngine gameEngine = new GameEngine(null);
 
     @Test
     void playerCountTest() {
