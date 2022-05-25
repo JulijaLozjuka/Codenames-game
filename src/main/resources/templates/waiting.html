@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text = "${playerName}"> </p>
+<a th:unless="${showEnterGameButton}" th:href = "@{'/codenames/waiting/'+${playerName}}"> Play </a>
+<a th:if="${showEnterGameButton}" th:href = "@{'/codenames/main-page/'+${playerName}}"> Enter Game </a>
+<p th:unless="${showEnterGameButton}" th:text="${waitMsg}"></p>
+
+
+</body>
+</html>

@@ -1,13 +1,13 @@
 package lv.bootcamp.codenames.codenamesgame.service;
 
 import lv.bootcamp.codenames.codenamesgame.model.Player;
+import lv.bootcamp.codenames.codenamesgame.model.PlayerTurnStatus;
 import lv.bootcamp.codenames.codenamesgame.model.Team;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.GameBoard;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,11 +15,16 @@ import java.util.stream.Stream;
 @Service
 public class GameEngine {
 
+    private final static int FULL_TEAMS = 4;
+    
+    private Player activePlayer;
+
     private Team redTeam;
     private Team blueTeam;
     private GameBoard gameBoard;
     private String hint;
     private final CardGenerator cardGenerator;
+
 
     public GameEngine(CardGenerator cardGenerator) {
         this.redTeam = new Team();
@@ -28,31 +33,66 @@ public class GameEngine {
     }
 
     public void addPlayer(Player player) {
-        if (redTeam.isTeamFull()&& blueTeam.isTeamFull()){
+        if (redTeam.isTeamFull() && blueTeam.isTeamFull()) {
             return;
         }
-        if (!redTeam.isTeamFull()){
+        if (!redTeam.isTeamFull()) {
             redTeam.addPlayer(player);
-        }
-        else {
+        } else {
             blueTeam.addPlayer(player);
         }
-        if (getPlayerCount()==4){
+        if (allPlayersReady()) {
             startGame();
         }
     }
 
-    private void startGame() {
+    public void startGame() {
         gameBoard = new GameBoard();
         List<Card> gameCards = cardGenerator.generateCards();
         gameBoard.setGameCards(gameCards);
+        activePlayer = redTeam.getSpymaster();
+    }
+    public void passTheTurnToTheNextPlayer(){
+        if(activePlayer.getName().equals(redTeam.getSpymaster().getName())){
+            activePlayer = redTeam.getOperative();
+        }
+
+        if(activePlayer.getName().equals(redTeam.getOperative().getName())){
+            activePlayer = blueTeam.getSpymaster();
+        }
+
+        if(activePlayer.getName().equals(blueTeam.getSpymaster().getName())){
+            activePlayer = blueTeam.getOperative();
+        }
+
+        if(activePlayer.getName().equals(blueTeam.getOperative().getName())){
+            activePlayer = redTeam.getSpymaster();
+        }
+    }
+    public PlayerTurnStatus checkPlayer(String playerName) {
+        PlayerTurnStatus result = new PlayerTurnStatus();
+
+        if(activePlayer.getName().equals(playerName)){
+            result.setPlayersTurn(true);
+        }
+
+        if(redTeam.getSpymaster().getName().equals(playerName)
+                || blueTeam.getSpymaster().getName().equals(playerName) ){
+            result.setSpymaster(true);
+        }
+
+        return result;
 
     }
-
-    public int getPlayerCount(){
-        return redTeam.getPlayerCount()+ blueTeam.getPlayerCount();
+    public boolean checkIfWinnerFound() {
+        return gameBoard.checkAllRedCardsRevealed() || gameBoard.checkAllBlueCardsRevealed() || gameBoard.checkBlackCardRevealed();
     }
-    public List<Player> getPlayerList(){
+
+    public int getPlayerCount() {
+        return redTeam.getPlayerCount() + blueTeam.getPlayerCount();
+    }
+
+    public List<Player> getPlayerList() {
         return Stream.of(redTeam.getOperative(), redTeam.getSpymaster(), blueTeam.getOperative(), blueTeam.getSpymaster())
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -91,5 +131,12 @@ public class GameEngine {
         this.hint = hint;
     }
 
+
+    public boolean allPlayersReady() {
+        return getPlayerCount() == FULL_TEAMS;
+    }
+
+
+    
 
 }

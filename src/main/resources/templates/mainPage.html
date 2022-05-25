@@ -6,5 +6,9 @@
 </head>
 <body>
 <p>Hello from main page</p>
+<div th:each="card:${gameCards}">
+    <p th:text="${card.text}"></p>
+</div>
+
 </body>
 </html>

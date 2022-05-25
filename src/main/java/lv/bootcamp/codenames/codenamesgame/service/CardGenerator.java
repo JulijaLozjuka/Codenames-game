@@ -1,6 +1,7 @@
 package lv.bootcamp.codenames.codenamesgame.service;
 
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
+import lv.bootcamp.codenames.codenamesgame.model.gameelements.Color;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +16,13 @@ public class CardGenerator {
     }
     public List<Card> generateCards(){
         List<String> words = wordGenerator.generateWords();
-
-        return new ArrayList<Card>();
+        List<Card> cards = new ArrayList<>();
+        for (String word:words){
+            Card card = new Card();
+            card.setText(word);
+            card.setColor(Color.RED);
+            cards.add(card);
+        }
+        return cards;
     }
 }
