@@ -2,6 +2,7 @@ package lv.bootcamp.codenames.codenamesgame.service;
 
 import lv.bootcamp.codenames.codenamesgame.model.Player;
 import lv.bootcamp.codenames.codenamesgame.model.Team;
+import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.GameBoard;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,12 @@ public class GameEngine {
     private Team blueTeam;
     private GameBoard gameBoard;
     private String hint;
+    private final CardGenerator cardGenerator;
 
-    public GameEngine() {
+    public GameEngine(CardGenerator cardGenerator) {
         this.redTeam = new Team();
         this.blueTeam = new Team();
+        this.cardGenerator = cardGenerator;
     }
 
     public void addPlayer(Player player) {
@@ -34,7 +37,18 @@ public class GameEngine {
         else {
             blueTeam.addPlayer(player);
         }
+        if (getPlayerCount()==4){
+            startGame();
+        }
     }
+
+    private void startGame() {
+        gameBoard = new GameBoard();
+        List<Card> gameCards = cardGenerator.generateCards();
+        gameBoard.setGameCards(gameCards);
+
+    }
+
     public int getPlayerCount(){
         return redTeam.getPlayerCount()+ blueTeam.getPlayerCount();
     }
