@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/styles/cardStyleButton.css}" rel="stylesheet" />
 </head>
 <body>
 <p>Hello from main page</p>
+<ul class="board-cards" th:each = "row:${cardRows}">
+    <li th:each = "card:${row}">
+        <input type="radio" id="a25" name="amount" />
+        <label for="a25" th:text = "${card.text}"></label>
+    </li>
+</ul>
 <div th:each="card:${gameCards}">
     <p th:text="${card.text}"></p>
 </div>

@@ -16,9 +16,7 @@
             <form action="#" th:action="@{/codenames/save-player}" th:object="${player}" method="post">
                 <div class="mb-3">
                     <label for="playerName" class="form-label">Enter name:</label>
-                    <input th:field="${player.name}" type="text" class="form-control" id="playerName"
-                           aria-describedby="help">
-                    <div id="help" class="form-text">Let's play</div>
+                    <input th:field="${player.name}" type="text" class="form-control" id="playerName">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
