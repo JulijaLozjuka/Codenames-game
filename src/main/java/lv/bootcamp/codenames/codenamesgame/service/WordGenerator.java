@@ -2,6 +2,9 @@ package lv.bootcamp.codenames.codenamesgame.service;
 
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +12,30 @@ import java.util.List;
 public class WordGenerator {
 
     public List<String> generateWords(){
+        List<String> listOfWords = new ArrayList<>();
+        List<String> listOf25Words = new ArrayList<>();
+        try (
+                BufferedReader bufReader = new BufferedReader(new
+                        FileReader("GameWords.txt"))) {
+            String line = bufReader.readLine();
+            while (line != null) {
+                listOfWords.add(line);
+                line = bufReader.readLine();
+            }
+            bufReader.close();
+            for (int i = 0; i < 25; i++) {
+                int index = (int) (Math.random() * listOfWords.size());
+                listOf25Words.add(listOfWords.get(index));
+                listOfWords.remove(index);
 
-        return List.of("test1","test2","test3","test4","test5"
-                ,"test6","test7","test8","test9","test10"
-                ,"test11","test12","test13","test14","test15"
-                ,"test16","test17","test18","test19","test20"
-                ,"test21","test22","test23","test24","test25");
+            }
+        }
+        catch (
+                IOException e) {
+            System.out.println("List of words not found");
+        }
+
+        return listOf25Words;
     }
 
 }
