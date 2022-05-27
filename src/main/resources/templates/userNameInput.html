@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/main.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
@@ -10,27 +12,51 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-8">
-            <form action="#" th:action="@{/codenames/save-player}" th:object="${player}" method="post">
-                <div class="mb-3">
-                    <label for="playerName" class="form-label">Enter name:</label>
-                    <input th:field="${player.name}" type="text" class="form-control" id="playerName"
-                           aria-describedby="help">
-                    <div id="help" class="form-text">Let's play</div>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <div class="col-4">
-            <p> Players connected: </p>
-            <div th:each="playerFromList:${playerList}">
-                <p th:text="${playerFromList.name}"></p>
-            </div>
-        </div>
-    </div>
+<header>
+    <a href="#" class="logo">LOGO</a>
+    <ul>
+        <li><a href="#" class="active">Play</a></li>
+        <li><a href="#">Game Rules</a></li>
+    </ul>
+</header>
+<section>
+
+    <!--    <img src="/static/15Z_2102.w026.n002.163B.p1.163.jpg" id="stars">-->
+    <h2 id="text">CODENAMES</h2>
+    <a href="#" id="btn">Start Game</a>
+
+
+</section>
+
+<div class="sec">
+    <h2>Game rules</h2>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi consequuntur cum dolor dolorum ducimus fugiat
+        fugit itaque, magnam maiores nam nobis obcaecati officia quia quisquam rem repudiandae, ullam, vel! Lorem ipsum
+        dolor sit amet, consectetur adipisicing elit. Assumenda consectetur dolorum facilis minima neque provident unde.
+        Asperiores blanditiis corporis, distinctio ea error neque nisi perferendis vitae. In ipsa non vitae.<br><br>
+    </p>
 </div>
+<!--<div class="col-4">-->
+<!--    <p> Players connected: </p>-->
+<!--    <div th:each="playerFromList:${playerList}">-->
+<!--        <p th:text="${playerFromList.name}"></p>-->
+<!--    </div>-->
+<!--    <div class="col-8">-->
+<!--        <form action="#" th:action="@{/codenames/save-player}" th:object="${player}" method="post">-->
+<!--            <div class="mb-3">-->
+<!--                <label for="playerName" class="form-label">Enter name:</label>-->
+<!--                <input th:field="${player.name}" type="text" class="form-control" id="playerName"-->
+<!--                       aria-describedby="help">-->
+<!--                <div id="help" class="form-text">Let's play</div>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary">Start Game</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div>-->
+<!--    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cum deleniti dolorum eligendi fugiat impedit in inventore laborum maxime, molestiae natus quae, quaerat quis rerum sapiente veniam voluptatibus? Earum, quaerat.</p>-->
+<!--</div>-->
 
 
 </body>
