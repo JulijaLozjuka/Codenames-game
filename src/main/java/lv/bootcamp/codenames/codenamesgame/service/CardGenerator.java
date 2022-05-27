@@ -5,6 +5,7 @@ import lv.bootcamp.codenames.codenamesgame.model.gameelements.Color;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,13 +17,28 @@ public class CardGenerator {
     }
     public List<Card> generateCards(){
         List<String> words = wordGenerator.generateWords();
-        List<Card> cards = new ArrayList<>();
-        for (String word:words){
+
+        ArrayList<Card> gameCards = new ArrayList<>();
+
+        for (String element : words) {
             Card card = new Card();
-            card.setText(word);
-            card.setColor(Color.RED);
-            cards.add(card);
+            card.setText(element);
+            card.setRevealed(false);
+            gameCards.add(card);
         }
-        return cards;
+
+        for (int i = 0; i < 9; i++) {
+            gameCards.get(i).setColor(Color.RED);
+        }
+        for (int i = 9; i < 17; i++) {
+            gameCards.get(i).setColor(Color.BLUE);
+        }
+        for (int i = 17; i < 24; i++) {
+            gameCards.get(i).setColor(Color.GREEN);
+        }
+        gameCards.get(gameCards.size()-1).setColor(Color.BLACK);
+        Collections.shuffle(gameCards);
+
+        return gameCards;
     }
 }
