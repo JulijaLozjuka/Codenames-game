@@ -12,18 +12,27 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>Hello from main page</h1>
-    </div>
-    <div class="row">
-        <form>
-            <div class="row" th:each="row:${cardRows}">
-                <div  style="width: 10%;" th:each="card:${row}">
-                    <input th:attr="value=${card.text},id=${card.text}" type="radio" class="btn-check"
-                           autocomplete="off" checked="">
-                    <label th:attr="for=${card.text}" th:text="${card.text}" class="btn btn-outline-success"></label>
-                </div>
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <h1>Hello from main page</h1>
             </div>
-        </form>
+            <div class="row">
+                <form>
+                    <div class="row" th:each="row:${cardRows}">
+                        <div style="width: 10%;" th:each="card:${row}">
+                            <input th:attr="value=${card.text},id=${card.text}" type="radio" class="btn-check"
+                                   autocomplete="off" checked="">
+                            <label th:attr="for=${card.text}" th:text="${card.text}"
+                                   class="btn btn-outline-success"></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-2">
+        </div>
     </div>
 </div>
 </body>
