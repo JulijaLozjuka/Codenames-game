@@ -68,6 +68,19 @@ public class HomeController {
         gameEngine.setHint(hint);
         return "redirect: /codenames/main-page/" + playerName;
     }
+    @PostMapping("/operative/move/{playerName}")
+    public String operativeMove(@PathVariable(value = "playerName") String playerName, String word){
+        List<Card> cardList = gameEngine.getGameBoard().getGameCards();
+        for (Card card:cardList){
+            if (word.equals(card.getText())){
+                card.setRevealed(true);
+            }
+        }
+        return "redirect: /codenames/main-page/" + playerName;
+    }
+
+
+
 
 
 
