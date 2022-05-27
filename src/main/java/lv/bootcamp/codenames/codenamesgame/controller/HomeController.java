@@ -2,6 +2,8 @@ package lv.bootcamp.codenames.codenamesgame.controller;
 
 import lv.bootcamp.codenames.codenamesgame.model.Player;
 import lv.bootcamp.codenames.codenamesgame.model.PlayerTurnStatus;
+import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
+import lv.bootcamp.codenames.codenamesgame.model.gameelements.Hint;
 import lv.bootcamp.codenames.codenamesgame.service.GameEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,12 +51,25 @@ public class HomeController {
     @GetMapping("/main-page/{playerName}")
     public String getMainPage(@PathVariable(value = "playerName") String playerName, ModelMap modelMap){
         modelMap.addAttribute("player",playerName);
-        modelMap.addAttribute("gameCards",gameEngine.getGameBoard().getGameCards());
+        List<Card> cardList = gameEngine.getGameBoard().getGameCards();
+        List<List<Card>> cardRows = new ArrayList<>();
+        for (int i = 0; i <5 ; i++) {
+         cardRows.add(cardList.subList(i*5,(i+1)*5));
+        }
+        modelMap.addAttribute("cardRows",cardRows);
         PlayerTurnStatus playerTurnStatus = gameEngine.checkPlayer(playerName);
         modelMap.addAttribute("showSpymasterElements", playerTurnStatus.isSpymaster());
         modelMap.addAttribute("showActivePlayerElements", playerTurnStatus.isPlayersTurn());
+        modelMap.addAttribute("hint",gameEngine.getHint());
         return "mainPage";
     }
+    @PostMapping("/spymaster/move/{playerName}")
+    public String spymasterMove(@PathVariable(value = "playerName") String playerName, Hint hint){
+        gameEngine.setHint(hint);
+        return "redirect: /codenames/main-page/" + playerName;
+    }
+
+
 
 
 }
