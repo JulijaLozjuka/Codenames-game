@@ -4,6 +4,7 @@ import java.util.List;
 
 public class GameBoard {
     private List<Card> gameCards;
+    private Hint hint;
     private static final int RED_CARD_NUMBER = 9;
     private static final int BLUE_CARD_NUMBER = 8;
 
@@ -27,5 +28,11 @@ public class GameBoard {
 
     }
 
+    public Hint getHint() {
+        return hint;
+    }
 
+    public void setHint(Hint hint) {
+        this.hint = hint;
+    }
 }

@@ -14,9 +14,10 @@ public class WordGenerator {
     public List<String> generateWords(){
         List<String> listOfWords = new ArrayList<>();
         List<String> listOf25Words = new ArrayList<>();
+        ClassLoader classLoader = getClass().getClassLoader();
         try (
                 BufferedReader bufReader = new BufferedReader(new
-                        FileReader("GameWords.txt"))) {
+                        FileReader(classLoader.getResource("GameWords.txt").getFile()))) {
             String line = bufReader.readLine();
             while (line != null) {
                 listOfWords.add(line);

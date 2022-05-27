@@ -1,0 +1,42 @@
+.board-cards {
+     list-style-type:none;
+     margin:25px 0 0 0;
+     padding:0;
+}
+
+.board-cards li {
+     float:left;
+     margin:0 5px 0 0;
+    width:100px;
+    height:40px;
+    position:relative;
+}
+
+.board-cards label, .board-cards input {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.board-cards input[type="radio"] {
+    opacity:0.011;
+    z-index:100;
+}
+
+.board-cards input[type="radio"]:checked + label {
+    background:yellow;
+}
+
+.board-cards label {
+     padding:5px;
+     border:1px solid #CCC;
+     cursor:pointer;
+    z-index:90;
+}
+
+.board-cards label:hover {
+     background:#DDD;
+}
