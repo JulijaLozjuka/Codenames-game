@@ -3,6 +3,7 @@ package lv.bootcamp.codenames.codenamesgame.controller;
 import lv.bootcamp.codenames.codenamesgame.model.Player;
 import lv.bootcamp.codenames.codenamesgame.model.PlayerTurnStatus;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
+import lv.bootcamp.codenames.codenamesgame.model.gameelements.Hint;
 import lv.bootcamp.codenames.codenamesgame.service.GameEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -59,8 +60,16 @@ public class HomeController {
         PlayerTurnStatus playerTurnStatus = gameEngine.checkPlayer(playerName);
         modelMap.addAttribute("showSpymasterElements", playerTurnStatus.isSpymaster());
         modelMap.addAttribute("showActivePlayerElements", playerTurnStatus.isPlayersTurn());
+        modelMap.addAttribute("hint",gameEngine.getHint());
         return "mainPage";
     }
+    @PostMapping("/spymaster/move/{playerName}")
+    public String spymasterMove(@PathVariable(value = "playerName") String playerName, Hint hint){
+        gameEngine.setHint(hint);
+        return "redirect: /codenames/main-page/" + playerName;
+    }
+
+
 
 
 }

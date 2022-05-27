@@ -5,6 +5,7 @@ import lv.bootcamp.codenames.codenamesgame.model.PlayerTurnStatus;
 import lv.bootcamp.codenames.codenamesgame.model.Team;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.GameBoard;
+import lv.bootcamp.codenames.codenamesgame.model.gameelements.Hint;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,6 @@ public class GameEngine {
     private Team redTeam;
     private Team blueTeam;
     private GameBoard gameBoard;
-    private String hint;
     private final CardGenerator cardGenerator;
 
 
@@ -97,6 +97,13 @@ public class GameEngine {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
+    public void setHint(Hint hint){
+        gameBoard.setHint(hint);
+    }
+    public Hint getHint(){
+        return gameBoard.getHint();
+    }
+
 
 
     public Team getRedTeam() {
@@ -122,15 +129,6 @@ public class GameEngine {
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
-
-    public String getHint() {
-        return hint;
-    }
-
-    public void setHint(String hint) {
-        this.hint = hint;
-    }
-
 
     public boolean allPlayersReady() {
         return getPlayerCount() == FULL_TEAMS;
