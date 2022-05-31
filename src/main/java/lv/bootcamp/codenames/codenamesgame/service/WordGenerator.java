@@ -26,7 +26,7 @@ public class WordGenerator {
             bufReader.close();
             for (int i = 0; i < 25; i++) {
                 int index = (int) (Math.random() * listOfWords.size());
-                listOf25Words.add(listOfWords.get(index));
+                listOf25Words.add(listOfWords.get(index).trim());
                 listOfWords.remove(index);
 
             }
