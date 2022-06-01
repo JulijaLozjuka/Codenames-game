@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CardGenerator {
@@ -37,7 +38,7 @@ public class CardGenerator {
             gameCards.get(i).setColor(Color.GREEN);
         }
         gameCards.get(gameCards.size()-1).setColor(Color.BLACK);
-        Collections.shuffle(gameCards);
+        Collections.shuffle(gameCards, new Random(10));
 
         return gameCards;
     }
