@@ -20,18 +20,19 @@ class WordGeneratorTest {
         assertEquals(25, words.generateWords().size());
     }
 
-    @Test
-    void twoArrayListsAreNotSimilar() {
-        WordGenerator words = new WordGenerator();
-        WordGenerator words1 = new WordGenerator();
-        assertFalse(words.generateWords().equals(words1.generateWords()));
-    }
 
     @Test
     void noTheSameWordsInArrayList() {
         WordGenerator words = new WordGenerator();
-        for (int i = 1; i < 25; i++) {
-          assertFalse(words.generateWords().get(i).equals(words.generateWords().get(i-1)));
+        for (int i = 0; i < words.generateWords().size(); i++) {
+            String testString = words.generateWords().get(i);
+            for (int j = 0; i < words.generateWords().size(); i++) {
+                if (i == j)
+                    break;
+                else {
+                    assertFalse(words.generateWords().get(j).equals(testString));
+                }
+            }
         }
     }
 }
