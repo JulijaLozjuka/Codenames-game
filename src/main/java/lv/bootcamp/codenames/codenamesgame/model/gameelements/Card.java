@@ -28,4 +28,13 @@ public class Card {
     public void setRevealed(boolean revealed) {
         isRevealed = revealed;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "text='" + text + '\'' +
+                ", color=" + color +
+                ", isRevealed=" + isRevealed +
+                '}';
+    }
 }
