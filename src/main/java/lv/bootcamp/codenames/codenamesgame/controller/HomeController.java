@@ -73,6 +73,10 @@ public class HomeController {
         modelMap.addAttribute("blueTeam", gameEngine.getBlueTeam());
         modelMap.addAttribute("gameEnd", gameEngine.isGameEnd());
         modelMap.addAttribute("winningTeam", gameEngine.getWinningTeam());
+
+        int cssClassNumber = (int )(Math.random()*4+1);
+        modelMap.addAttribute("cssClassNumber",cssClassNumber);
+
         return "mainPage";
     }
 

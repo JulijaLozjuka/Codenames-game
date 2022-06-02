@@ -20,7 +20,7 @@
     </div>
     <div  class="row padding-top-10">
         <div class="col-4 mx-auto">
-            <div class="white-shadowed-form">
+            <div class="black-shadowed-form">
                 <div class="row mx-auto">
                     <h5 th:unless="${showEnterGameButton}" th:text="${waitMsg}"></h5>
                 </div>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="white-shadowed-form margin-top-3">
+            <div class="black-shadowed-form margin-top-3">
                 <div class="row mx-auto">
                     <h5> Players connected: </h5>
                     <h6 th:each="playerFromList:${playerList}" th:text="${playerFromList.name}"></h6>

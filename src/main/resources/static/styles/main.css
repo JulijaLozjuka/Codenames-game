@@ -28,8 +28,13 @@ height:10px;
 }
 
 
-.white-shadowed-form{
+.black-shadowed-form{
      background-color: rgb(1 1 1 / 50%);
+     padding: 15px;
+     color: white;
+}
+.white-shadowed-form{
+     background-color: rgb(255 255 255 / 50%);
      padding: 15px;
      color: white;
 }
@@ -59,8 +64,8 @@ color: white;
 background-color: rgb(1 1 1 / 50%);
 }
 
-.white-background{
-background-color: white;
+.transparent-background{
+background-color: rgb(1 1 1 / 0%);
 }
 
 .padding-top-30 {
@@ -165,7 +170,6 @@ z-index:12;
 	    position: relative;
         color: #fff;
         background-color: rgb(72 72 72 / 54%);
-            border: 1px solid #80808052;
         font-size: 26px;
         text-align: center;
         height: 100px;
@@ -176,7 +180,12 @@ z-index:12;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        padding-top: 4%;
+        font-family: Carter One;
+            font-size: 20px;
 }
+
+
 
 .form .plan input:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
 	border: 3px solid #333;
@@ -215,6 +224,13 @@ z-index:12;
 .submit:hover{
 	cursor: pointer;
 	transform: rotateX(360deg);
+}
+
+.simple-card-background{
+background-image:url('/styles/spyLogo3.jpg');
+ background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
 }
 
 /*slide */
@@ -265,6 +281,51 @@ z-index:12;
 .button-18:hover:after{
   width: 100%;
 }
+
+/* CSS */
+.button-20 {
+  align-items: center;
+  background-color: #0A66C2;
+  border: 0;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 20px;
+  width: 100%;
+  min-height: 40px;
+  min-width: 0px;
+  overflow: hidden;
+  padding: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+}
+
+.button-20:hover,
+.button-20:focus {
+  background-color: #16437E;
+  color: #ffffff;
+}
+
+.button-20:active {
+  background: #09223b;
+  color: rgb(255, 255, 255, .7);
+}
+
+.button-20:disabled {
+  background-color: rgb(10 102 194 / 20%);
+  color: rgb(255, 255, 255, 30%);
+}
+/*button 41*/
+
 .no-border{
 border: 0px solid #333;
 border-radius: 0px;
@@ -284,8 +345,13 @@ line-height: 33px;
 }
 
 .hint-text{
-color:black;
+color:#000a80;
 text-align:center;
+font-size: 30px;
+}
+.loss-text{
+font-size: 35px;
+
 }
 
 .revealed-card{
@@ -297,15 +363,51 @@ width:150px;
 filter: brightness(100%);
 }
 
-.red-revealed-card-background{
+.red-revealed-card-background1{
 background-image:url('/styles/redCard1.jpg');
    background-size:     cover;
     background-repeat:   no-repeat;
     background-position: center center;
 }
+.red-revealed-card-background2{
+background-image:url('/styles/redCard2.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.red-revealed-card-background3{
+background-image:url('/styles/redCard3.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.red-revealed-card-background4{
+background-image:url('/styles/redCard4.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
 
-.blue-revealed-card-background{
+.blue-revealed-card-background1{
 background-image:url('/styles/blueCard1.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.blue-revealed-card-background2{
+background-image:url('/styles/blueCard2.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.blue-revealed-card-background3{
+background-image:url('/styles/blueCard3.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.blue-revealed-card-background4{
+background-image:url('/styles/blueCard4.jpg');
    background-size:     cover;
     background-repeat:   no-repeat;
     background-position: center center;
@@ -318,11 +420,67 @@ background-image:url('/styles/blackCard1.jpg');
     background-position: center center;
 }
 
-.green-revealed-card-background{
+.green-revealed-card-background1{
 background-image:url('/styles/greenCard1.jpg');
    background-size:     cover;
     background-repeat:   no-repeat;
     background-position: center center;
 }
+.green-revealed-card-background2{
+background-image:url('/styles/greenCard2.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.green-revealed-card-background3{
+background-image:url('/styles/greenCard3.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.green-revealed-card-background4{
+background-image:url('/styles/greenCard4.jpg');
+   background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+.red-border{
+border: 3px solid #e92a20;
+box-shadow: 0px 0px 12px 4px #e92a20;
+}
+.blue-border{
+border: 3px solid #0dcaf0;
+box-shadow: 0px 0px 12px 4px #0dcaf0;
+}
+.black-border{
+border: 3px solid #000000;
+box-shadow: 0px 0px 12px 4px #000000;
+}
+.green-border{
+border: 3px solid #0ecf0b;
+box-shadow: 0px 0px 12px 4px #0ecf0b;
+}
+.black-simple-border{
+border: 3px solid #333;
+}
+/* glowing text */
+.glow {
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 7px #fff, 0 0 15px #fff, 0 0 20px #00c6e6, 0 0 25px #00c6e6, 0 0 30px #00c6e6, 0 0 35px #00c6e6, 0 0 40px #00c6e6;
+  }
+  to {
+    text-shadow: 0 0 15px #fff, 0 0 25px #fff, 0 0 35px #01f3ff, 0 0 45px #01f3ff, 0 0 55px #01f3ff, 0 0 65px #01f3ff, 0 0 75px #01f3ff;
+  }
+}
+/* glowing text*/
 
 }
