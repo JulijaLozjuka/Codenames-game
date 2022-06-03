@@ -9,7 +9,7 @@ public class GameBoard {
     public static final int BLUE_CARD_NUMBER = 8;
 
     public GameBoard() {
-        hint = new Hint("No hint yet");
+        hint = new Hint("No clue yet");
     }
 
     public List<Card> getGameCards() {

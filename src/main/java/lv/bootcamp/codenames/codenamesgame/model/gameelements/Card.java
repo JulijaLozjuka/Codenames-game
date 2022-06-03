@@ -4,6 +4,7 @@ public class Card {
     private String text;
     private Color color;
     private boolean isRevealed;
+    private int type;
 
     public String getText() {
         return text;
@@ -36,5 +37,13 @@ public class Card {
                 ", color=" + color +
                 ", isRevealed=" + isRevealed +
                 '}';
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
     }
 }

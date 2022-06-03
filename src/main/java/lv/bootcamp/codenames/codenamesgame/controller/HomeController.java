@@ -5,7 +5,9 @@ import lv.bootcamp.codenames.codenamesgame.model.PlayerTurnStatus;
 import lv.bootcamp.codenames.codenamesgame.model.TurnData;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.Card;
 import lv.bootcamp.codenames.codenamesgame.model.gameelements.Color;
+import lv.bootcamp.codenames.codenamesgame.service.ChatService;
 import lv.bootcamp.codenames.codenamesgame.service.GameEngine;
+import lv.bootcamp.codenames.codenamesgame.service.GameLogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,13 @@ import java.util.List;
 public class HomeController {
 
     private final GameEngine gameEngine;
+    private final GameLogService gameLogService;
+    private final ChatService chatService;
 
-    public HomeController(GameEngine gameEngine) {
+    public HomeController(GameEngine gameEngine, GameLogService gameLogService, ChatService chatService) {
         this.gameEngine = gameEngine;
+        this.gameLogService = gameLogService;
+        this.chatService = chatService;
     }
 
     @GetMapping("/user-name-input")
@@ -73,7 +79,17 @@ public class HomeController {
         modelMap.addAttribute("blueTeam", gameEngine.getBlueTeam());
         modelMap.addAttribute("gameEnd", gameEngine.isGameEnd());
         modelMap.addAttribute("winningTeam", gameEngine.getWinningTeam());
+        modelMap.addAttribute("redCardsOpen",gameEngine.getRedCardsOpen());
+        modelMap.addAttribute("blueCardsOpen",gameEngine.getBlueCardsOpen());
+
+        addHistoryData(modelMap);
+
         return "mainPage";
+    }
+
+    private void addHistoryData(ModelMap modelMap) {
+        modelMap.addAttribute("logHistory", gameLogService.getHistory());
+        modelMap.addAttribute("chatHistory", chatService.getHisotry());
     }
 
     @PostMapping("/player/move/{playerName}")
