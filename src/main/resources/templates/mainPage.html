@@ -9,6 +9,94 @@
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
             crossorigin="anonymous"></script>
     <link th:href="@{/styles/main.css}" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+            integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+            var stompClient = null;
+            var stompClientLog = null;
+
+            function setConnected(connected) {
+                document.getElementById('conversationDiv').style.visibility
+                  = connected ? 'visible' : 'hidden';
+                document.getElementById('response').innerHTML = '';
+            }
+
+            function connect() {
+                var socket = new SockJS('/chat');
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function(frame) {
+                    setConnected(true);
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe('/topic/messages', function(messageOutput) {
+                        showMessageOutput(JSON.parse(messageOutput.body));
+                    });
+                });
+
+                var socketLog = new SockJS('/log');
+                stompClientLog = Stomp.over(socketLog);
+                stompClientLog.connect({}, function(frame) {
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe('/topic/log', function(messageOutput) {
+                        showLogMessageOutput(JSON.parse(messageOutput.body));
+                    });
+                });
+            }
+
+            function disconnect() {
+                if(stompClient != null) {
+                    stompClient.disconnect();
+                }
+                setConnected(false);
+                console.log("Disconnected");
+            }
+
+            function sendMessage() {
+                var from = document.getElementById('from').value;
+                var text = document.getElementById('text').value;
+                stompClient.send("/app/chat", {},
+                  JSON.stringify({'from':from, 'text':text}));
+            }
+
+            function showMessageOutput(messageOutput) {
+                var response = document.getElementById('response');
+                var wrap = document.createElement('div');
+                var name = document.createElement('div');
+                var text = document.createElement('div');
+                name.style.color = 'white';
+                wrap.style.wordWrap = 'break-word';
+                wrap.style.display = 'flex';
+                text.style.wordWrap = 'break-word';
+                text.style.margin = '0px 0px 0px 3px';
+                name.appendChild(document.createTextNode(messageOutput.from + ": "));
+                text.appendChild(document.createTextNode(messageOutput.text + " (" + messageOutput.time + ")"));
+                  wrap.appendChild(name);
+                  wrap.appendChild(text);
+                response.appendChild(wrap);
+            }
+
+            function showLogMessageOutput(messageOutput) {
+                var response = document.getElementById('logResponse');
+                var p = document.createElement('p');
+                p.style.wordWrap = 'break-word';
+                p.appendChild(document.createTextNode(messageOutput.text));
+                response.appendChild(p);
+            }
+
+window.onload = function (){
+connect();
+}
+
+
+
+
+
+
+
+
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -16,29 +104,36 @@
         <div class="col-3">
         </div>
         <div class="col-6">
-            <div class ="row mx-auto">
-                <div class="text-align-center white-color" th:if="${!showActivePlayerElements} and ${!gameEnd}" th:text="${activePlayerName} + '\'s move'"></div>
+            <div class="row mx-auto">
+                <div class="text-align-center white-color" th:if="${!showActivePlayerElements} and ${!gameEnd}"
+                     th:text="${activePlayerName} + '\'s move'"></div>
             </div>
-            <div class ="row mx-auto">
-                <div class="text-align-center white-color" th:if="${showActivePlayerElements} and ${!gameEnd}"> Your turn! </div>
+            <div class="row mx-auto">
+                <div class="text-align-center white-color" th:if="${showActivePlayerElements} and ${!gameEnd}"> Your
+                    turn!
+                </div>
             </div>
-            <div class ="row mx-auto" th:if="${showActivePlayerElements} and ${showSpymasterElements} and ${!gameEnd}">
-                <div class="text-align-center white-color">Give your operative a clue! </div>
+            <div class="row mx-auto" th:if="${showActivePlayerElements} and ${showSpymasterElements} and ${!gameEnd}">
+                <div class="text-align-center white-color">Give your operative a clue!</div>
             </div>
-            <div class ="row mx-auto" th:if="${showActivePlayerElements} and ${!showSpymasterElements} and ${!gameEnd}">
-                <div class="text-align-center white-color">Try to guess the word! </div>
+            <div class="row mx-auto" th:if="${showActivePlayerElements} and ${!showSpymasterElements} and ${!gameEnd}">
+                <div class="text-align-center white-color">Try to guess the word!</div>
             </div>
-            <div class ="row mx-auto" th:if="${!showActivePlayerElements} and ${isActivePlayerFromYourTeam} and ${isActivePlayerSpymaster} and ${!gameEnd}">
+            <div class="row mx-auto"
+                 th:if="${!showActivePlayerElements} and ${isActivePlayerFromYourTeam} and ${isActivePlayerSpymaster} and ${!gameEnd}">
                 <div class="text-align-center white-color">Your spymaster is giving a clue...</div>
             </div>
-            <div class ="row mx-auto" th:if="${!showActivePlayerElements} and ${isActivePlayerFromYourTeam} and ${!isActivePlayerSpymaster} and ${!gameEnd}">
-                <div class="text-align-center white-color">Your operative is guessing... </div>
+            <div class="row mx-auto"
+                 th:if="${!showActivePlayerElements} and ${isActivePlayerFromYourTeam} and ${!isActivePlayerSpymaster} and ${!gameEnd}">
+                <div class="text-align-center white-color">Your operative is guessing...</div>
             </div>
-            <div class ="row mx-auto" th:if="${!showActivePlayerElements} and ${!isActivePlayerFromYourTeam} and ${isActivePlayerSpymaster} and ${!gameEnd}">
-                <div class="text-align-center white-color">Spymaster of other team is giving a clue... </div>
+            <div class="row mx-auto"
+                 th:if="${!showActivePlayerElements} and ${!isActivePlayerFromYourTeam} and ${isActivePlayerSpymaster} and ${!gameEnd}">
+                <div class="text-align-center white-color">Spymaster of other team is giving a clue...</div>
             </div>
-            <div class ="row mx-auto" th:if="${!showActivePlayerElements} and ${!isActivePlayerFromYourTeam} and ${!isActivePlayerSpymaster} and ${!gameEnd}">
-                <div class="text-align-center white-color">Operative of other team is guessing... </div>
+            <div class="row mx-auto"
+                 th:if="${!showActivePlayerElements} and ${!isActivePlayerFromYourTeam} and ${!isActivePlayerSpymaster} and ${!gameEnd}">
+                <div class="text-align-center white-color">Operative of other team is guessing...</div>
             </div>
             <div th:if="${gameEnd}" class="row">
                 <div div class="text-align-center loss-text" th:text="${winningTeam} + ' team won!'"></div>
@@ -48,31 +143,38 @@
         </div>
         <div class="col-3">
             <div class="row">
-                <a class="button-41"
+                <a class="button-2"
                    th:href="@{'/codenames/restart/'+${playerName}}">
-                    <span>PlAY AGAIN</span>
+                    PlAY AGAIN
                 </a>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-3">
+        <div class="col-3 z-index-12">
             <div class="row g-0 black-background">
                 <div class="text-align-center white-color">Red Team</div>
             </div>
             <div class="row g-0 black-background red-team-padding">
                 <div class="col-6">
-                    <ul class="list-group list-group-flush">
-                        <li th:text="'Spymaster: '+${redTeam.getSpymaster().getName()}" class="list-group-item"></li>
-                        <li th:text="'Operative: '+${redTeam.getOperative().getName()}" class="list-group-item"></li>
-                        <li class="list-group-item"> Opened Cards</li>
-                        <li class="list-group-item">-------</li>
+                    <ul class="white-color-size-20">
+                        <li th:text="'Spymaster: '+${redTeam.getSpymaster().getName()}"
+                            class="list-group-item margin-top-15"></li>
+                        <li th:text="'Operative: '+${redTeam.getOperative().getName()}"
+                            class="list-group-item margin-top-15"></li>
+                        <li th:text="'Cards opened: ' + ${redCardsOpen}" class="list-group-item margin-top-15"></li>
                     </ul>
                 </div>
-                <div class="col-6 z-index-12">
-                    <img class="row border-for-image width-100"
+                <div class="col-6 ">
+                    <img class="row border-for-image width-100 red-border-portrait"
                          th:src="@{/styles/redteam2.jpg}"/>
                 </div>
+            </div>
+            <div class="row form-divider"></div>
+            <div class="DivWithScroll z-index-12 black-shadowed-background height-64 ">
+                <p th:each="msg : ${logHistory}" style="overflow-wrap: break-word;" th:text="${msg.text}"></p>
+                <p id="logResponse">
+                </p>
             </div>
         </div>
         <div class="col-6">
@@ -92,42 +194,42 @@
                                        type="radio">
                                 <label th:if="${!card.isRevealed} and ${!showSpymasterElements}"
                                        th:attr="for=${card.text}"
-                                       th:text=" ${card.color}"
+                                       th:text=" ${card.text}"
                                        class="free-label four col black-simple-border simple-card-background"></label>
 
                                 <label th:if="${!card.isRevealed} and ${showSpymasterElements} and ${card.getColor().toString()} == 'GREEN'"
                                        th:attr="for=${card.text}"
-                                       th:text=" ${card.color}"
+                                       th:text=" ${card.text}"
                                        class="green-border free-label four col simple-card-background"></label>
                                 <label th:if="${!card.isRevealed} and ${showSpymasterElements} and ${card.getColor().toString()} == 'BLUE'"
                                        th:attr="for=${card.text}"
-                                       th:text=" ${card.color}"
+                                       th:text=" ${card.text}"
                                        class="blue-border free-label four col simple-card-background"></label>
                                 <label th:if="${!card.isRevealed} and ${showSpymasterElements} and  ${card.getColor().toString()} == 'RED'"
                                        th:attr="for=${card.text}"
-                                       th:text=" ${card.color}"
+                                       th:text=" ${card.text}"
                                        class="red-border free-label four col simple-card-background"></label>
                                 <label th:if="${!card.isRevealed} and ${showSpymasterElements} and ${card.getColor().toString()} == 'BLACK'"
                                        th:attr="for=${card.text}"
-                                       th:text=" ${card.color}"
+                                       th:text=" ${card.text}"
                                        class="black-border free-label four col simple-card-background"></label>
 
                                 <label th:if="${card.isRevealed()} and ${card.getColor().toString()} == 'RED'"
                                        th:attr="for=${card.text}"
-                                       th:class="'red-revealed-card-background'+${cssClassNumber} + ' revealed-card free-label four col'"></label>
+                                       th:class="'red-revealed-card-background'+${card.type} + ' revealed-card free-label four col'"></label>
                                 <label th:if="${card.isRevealed()} and ${card.getColor().toString()} == 'GREEN'"
                                        th:attr="for=${card.text}"
-                                       th:class="'green-revealed-card-background' + ${cssClassNumber} +  ' revealed-card free-label four col'"></label>
+                                       th:class="'green-revealed-card-background' + ${card.type} +  ' revealed-card free-label four col'"></label>
                                 <label th:if="${card.isRevealed()} and ${card.getColor().toString()} == 'BLUE'"
                                        th:attr="for=${card.text}"
-                                       th:class="'blue-revealed-card-background' + ${cssClassNumber} +  ' revealed-card free-label four col'"></label>
+                                       th:class="'blue-revealed-card-background' + ${card.type} +  ' revealed-card free-label four col'"></label>
                                 <label th:if="${card.isRevealed()} and ${card.getColor().toString()} == 'BLACK'"
                                        th:attr="for=${card.text}"
-                                       th:class="black-revealed-card-background revealed-card free-label four col"></label>
+                                       th:class="'black-revealed-card-background revealed-card free-label four col'"></label>
                             </div>
                         </div>
                     </div>
-                    <div id="form-divider" class="row">
+                    <div class="row form-divider">
 
 
                     </div>
@@ -161,28 +263,43 @@
                                 <span>Check turn</span>
                             </a>
                         </div>
-
-
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-3 z-index-12">
             <div class="row g-0 black-background">
                 <div class="text-align-center white-color">Blue Team</div>
             </div>
             <div class="row g-0 black-background blue-team-padding">
                 <div class="col-6">
-                    <img class="border-for-image width-100"
+                    <img class="border-for-image width-100 blue-border-portrait"
                          th:src="@{/styles/blueteam2.jpg}"/>
                 </div>
                 <div class="col-6">
-                    <ul class="list-group list-group-flush">
-                        <li th:text="'Spymaster: '+${blueTeam.getSpymaster().getName()}" class="list-group-item"></li>
-                        <li th:text="'Operative: '+${blueTeam.getOperative().getName()}" class="list-group-item"></li>
-                        <li class="list-group-item"> Opened Cards</li>
-                        <li class="list-group-item">-------</li>
+                    <ul class="white-color-size-20">
+                        <li th:text="'Spymaster: '+${blueTeam.getSpymaster().getName()}"
+                            class="list-group-item margin-top-15"></li>
+                        <li th:text="'Operative: '+${blueTeam.getOperative().getName()}"
+                            class="list-group-item margin-top-15"></li>
+                        <li th:text="'Cards opened: ' + ${blueCardsOpen}" class="list-group-item margin-top-15"></li>
                     </ul>
+                </div>
+            </div>
+            <div class="row form-divider"></div>
+            <div class="DivWithScroll z-index-12 black-shadowed-background height-64">
+                <input class="width-100 no-display" type="text" id="from" th:value="${playerName}" th:disabled="true"/>
+                <div id="conversationDiv">
+                    <input class="width-100" type="text" id="text" placeholder="Write a message..."/>
+                    <button class="button-20" id="sendMessage" onclick="sendMessage();">Send</button>
+                    <p id="response">
+                        <div th:each=" msg : ${chatHistory}" style="overflow-wrap: break-word; display: flex;">
+                            <div th:text="${msg.from} + ': '" style="color: white;"></div>
+                            <div th:text="${msg.text} + ' (' + ${msg.time} + ')'"
+                                 style="overflow-wrap: break-word; margin: 0px 0px 0px 3px;">
+                            </div>
+                        </div>
+                    </p>
                 </div>
             </div>
         </div>

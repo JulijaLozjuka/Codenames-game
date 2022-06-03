@@ -25,6 +25,7 @@ public class CardGenerator {
             card.setText(element);
             card.setRevealed(false);
             gameCards.add(card);
+            card.setType((int)(Math.random()*4+1));
         }
 
         for (int i = 0; i < 9; i++) {

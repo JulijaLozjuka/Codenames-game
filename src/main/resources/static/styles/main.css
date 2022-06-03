@@ -23,8 +23,17 @@ pre { font-family: "Carter One"; font-size: 13px; font-style: normal; font-varia
 }
 
 
-#form-divider{
+.form-divider{
 height:10px;
+}
+
+.height-64{
+height:64%;
+}
+
+
+.black-shadowed-background{
+background-color: rgb(1 1 1 / 50%);
 }
 
 
@@ -482,5 +491,74 @@ border: 3px solid #333;
   }
 }
 /* glowing text*/
+/*scroll*/
+
+.DivWithScroll{
+    overflow:scroll;
+    overflow-x:hidden;
+    color:#0A66C2;
+    max-height:490px;
+    padding-top: 15px;
+         padding-left: 15px;
+}
+::-webkit-scrollbar {
+  width: 15px;
+  height: 8px;
+  background-color: gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+}
+.white-color-size-20{
+font-size: 20px;
+    color: white;
+}
+
+/*scroll*/
+.red-border-portrait{
+border: 5px solid #ea2920;
+}
+.blue-border-portrait{
+border: 5px solid #128db9;
+}
+
+.width-100{
+width:100%;
+}
+
+.no-display{
+display: none;
+}
+.margin-top-15{
+    margin-top: 15%;
+}
+
+/* CSS */
+.button-2 {
+width:20%;
+  background-color: rgba(51, 51, 51, 0.5);
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+   margin-left: 2%;
+   text-decoration: none;
+}
+
+
 
 }
